@@ -1,0 +1,11 @@
+product_id,product_name,price,category
+PROD-00001,Coffee,52.18,Food
+PROD-00002,Green Tea,155.52,Dessert
+PROD-00003,Sandwich,102.22,Food
+PROD-00004,Cake,187.37,Food
+PROD-00005,Smoothie,57.83,Food
+PROD-00006,Latte,149.44,Snack
+PROD-00007,Croissant,88.08,Snack
+PROD-00008,Salad,190.96,Beverage
+PROD-00009,Soup,107.04,Food
+PROD-00010,Cookie,51.96,Beverage

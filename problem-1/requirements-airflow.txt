@@ -1,0 +1,15 @@
+# Airflow providers
+apache-airflow-providers-apache-spark==4.6.0
+apache-airflow-providers-postgres==5.10.0
+
+# PySpark
+pyspark==3.5.0
+
+# Database drivers
+psycopg2-binary==2.9.10
+
+# Data processing
+pandas==2.2.3
+
+# Utilities
+pendulum==3.0.0
