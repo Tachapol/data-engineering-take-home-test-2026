@@ -1,8 +1,6 @@
--- ====================================================================
 -- Table: daily_revenue
 -- Description: Daily aggregated revenue from completed orders
 -- Purpose: Track daily revenue performance for business analytics
--- ====================================================================
 
 CREATE TABLE IF NOT EXISTS daily_revenue (
     date DATE PRIMARY KEY,
@@ -10,8 +8,7 @@ CREATE TABLE IF NOT EXISTS daily_revenue (
     total_orders INTEGER NOT NULL,
     total_quantity INTEGER NOT NULL,
     avg_order_value DECIMAL(10,2) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Create index for date range queries

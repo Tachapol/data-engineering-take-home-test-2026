@@ -2,6 +2,7 @@
 services:
   kafka:
     image: apache/kafka:latest
+    platform: linux/arm64
     ports:
       - "9092:9092"
       - "9094:9094"
@@ -33,6 +34,7 @@ services:
 
   postgresql:
     image: postgres:17-alpine
+    platform: linux/arm64
     ports:
       - '5432:5432'
     volumes:

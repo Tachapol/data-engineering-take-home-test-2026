@@ -22,7 +22,7 @@ for table, df in data.items():
     conn.commit()
     conn.close()
     print(f"Import data to table {table}")
-    conn_str = "postgresql://postgres:postgres@localhost:5432/airflow"
+    conn_str = "postgresql://postgres:postgres@localhost:5432/postgres"
     eng = create_engine(conn_str)
     df.to_sql(name=table, con=eng, if_exists="append", chunksize=1000, index=False)
     df = pd.read_sql(f"select count(1) as cnt from {table}", con=eng)

@@ -1,5 +1,3 @@
-version: '3.8'
-
 x-airflow-common:
   &airflow-common
   build:
@@ -8,6 +6,7 @@ x-airflow-common:
   environment: &airflow-common-env
     AIRFLOW__CORE__EXECUTOR: LocalExecutor
     AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://postgres:postgres@postgresql:5432/airflow
+    AIRFLOW_CONN_POSTGRES_DEFAULT: 'postgres://postgres:postgres@postgresql:5432/postgres'
     AIRFLOW__CORE__FERNET_KEY: ''
     AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
     AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
@@ -18,7 +17,6 @@ x-airflow-common:
     - ./dags:/opt/airflow/dags
     - ./logs:/opt/airflow/logs
     - ./plugins:/opt/airflow/plugins
-    - ./src:/opt/airflow/dags/src
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on:
     &airflow-common-depends-on
@@ -29,6 +27,7 @@ services:
   # PostgreSQL for both Airflow metadata and data warehouse
   postgresql:
     image: postgres:17-alpine
+    platform: linux/arm64
     ports:
       - '5432:5432'
     volumes:
@@ -47,7 +46,7 @@ services:
   # Kafka (from original setup)
   kafka:
     image: apache/kafka:latest
-    platform: linux/amd64
+    platform: linux/arm64
     ports:
       - "9092:9092"
       - "9094:9094"
@@ -67,7 +66,7 @@ services:
   # Kafka UI (from original setup)
   kafka-ui:
     container_name: kafka-ui
-    platform: linux/amd64
+    platform: linux/arm64
     image: provectuslabs/kafka-ui:latest
     ports:
       - 8080:8080
@@ -99,6 +98,8 @@ services:
   airflow-scheduler:
     <<: *airflow-common
     command: scheduler
+    volumes:
+      - ./dags:/opt/airflow/dags
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:8080/health || exit 1"]
       interval: 30s

@@ -5,7 +5,7 @@ SELECT
     COUNT(DISTINCT o.order_id) as total_orders,
     SUM(o.quantity) as total_quantity,
     SUM(o.quantity * p.price) as total_revenue,
-    AVG(o.quantity * p.price) as avg_order_value
+    ROUND(AVG(o.quantity * p.price), 2) as avg_order_value_rounded
 FROM orders o
 JOIN products p ON o.product_id = p.product_id
 WHERE o.user_id = 'USER-001'

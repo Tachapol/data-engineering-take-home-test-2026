@@ -1,6 +1,5 @@
 """
-Airflow DAG for Daily Order Analytics Batch Pipeline
-Scheduled to run daily at 8:00 AM
+Airflow DAG for Daily Order Analytics Batch Pipeline Scheduled to run daily at 8:00 AM
 """
 
 from airflow import DAG
@@ -45,8 +44,7 @@ create_tables = PostgresOperator(
             total_orders INTEGER NOT NULL,
             total_quantity INTEGER NOT NULL,
             avg_order_value DECIMAL(10,2) NOT NULL,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
         """,
         """
@@ -54,8 +52,7 @@ create_tables = PostgresOperator(
             date DATE PRIMARY KEY,
             new_customer_count INTEGER NOT NULL,
             new_customer_revenue DECIMAL(15,2) NOT NULL,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
         """,
         """
@@ -65,8 +62,7 @@ create_tables = PostgresOperator(
             order_count INTEGER NOT NULL,
             total_quantity INTEGER NOT NULL,
             total_revenue DECIMAL(15,2) NOT NULL,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             PRIMARY KEY (date, category)
         );
         """
@@ -105,13 +101,12 @@ def check_data_quality(**context):
     from airflow.providers.postgres.hooks.postgres import PostgresHook
     pg_hook = PostgresHook(postgres_conn_id='postgres_default')
     
-    # แก้ไขบรรทัด Query: ลบ WHERE date = ... ออกให้หมด
     revenue_count = pg_hook.get_first("SELECT COUNT(*) FROM daily_revenue")[0]
     
     if revenue_count == 0:
         raise ValueError("No data found in daily_revenue table")
         
-    print(f"✓ Data Quality Passed: Found {revenue_count} records in total.")
+    print(f"Data Quality Passed: Found {revenue_count} records in total.")
 
 data_quality_check = PythonOperator(
     task_id='data_quality_check',
@@ -178,5 +173,5 @@ summary_report = PythonOperator(
     dag=dag,
 )
 
-# Define task dependencies
+# Task dependencies
 create_tables >> delete_existing_data >> run_batch_pipeline >> data_quality_check >> summary_report

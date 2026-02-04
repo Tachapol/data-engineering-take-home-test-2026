@@ -22,7 +22,7 @@ psql -h $PGHOST -p $PGPORT -U $PGUSER -d $PGDATABASE -f sql/problem-1-ddl-daily_
 echo "Creating daily_category_orders table..."
 psql -h $PGHOST -p $PGPORT -U $PGUSER -d $PGDATABASE -f sql/problem-1-ddl-daily_category_orders.sql
 
-echo "✓ All destination tables created successfully!"
+echo "All destination tables created successfully!"
 
 # Verify tables
 echo ""
@@ -30,4 +30,4 @@ echo "Verifying tables..."
 psql -h $PGHOST -p $PGPORT -U $PGUSER -d $PGDATABASE -c "\dt daily_*"
 
 echo ""
-echo "Setup complete! You can now run the Airflow DAG."
+echo "Setup complete!"
