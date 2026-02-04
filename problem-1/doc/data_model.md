@@ -85,8 +85,8 @@ Store daily order and revenue metrics grouped by product category.
 ## Aggregation Logic
 - All metrics are calculated at a **daily level**
 - Orders are joined with products to get price and category information
-- Revenue is calculated as `price × quantity`
-- Only completed orders are included
+- Revenue is calculated as `price * quantity`
+- Only "COMPLETED" orders are included
 
 ## Incremental Processing
 The pipeline processes data **one day at a time**.

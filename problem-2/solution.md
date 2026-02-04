@@ -1,1 +1,0 @@
-# Problem 2 – Batch Pipeline Solution

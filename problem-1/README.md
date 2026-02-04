@@ -11,9 +11,9 @@ problem-1/
 │   └── problem-1-dml-*.sql         # Insert data
 ├── src/
 │   └── batch_pipeline.py           # Main program that processes data
-├── docker-compose.yml              # Already configured
-├── Dockerfile                       # Dependencies
-└── README.MD                        # This file
+├── docker-compose.yml             
+├── Dockerfile                      # Dependencies
+└── README.MD                       
 ```
 
 ## How to Use
@@ -47,8 +47,18 @@ Open your browser: http://localhost:8081
 3. Click "Trigger" to start processing
 4. Wait for the DAG to complete (watch the status in Airflow UI)
 
-#### Step 5: View Results
+#### Note on Execution Date
+If no data exists for the execution date, the pipeline inserts a zero-summary row instead of failing. This allows safe re-runs and keeps downstream checks working.
 
+**Historical data can be reprocessed using Airflow backfill**
+```bash
+docker exec -it <airflow-container-id> airflow dags backfill \
+  --start-date 2024-01-01 \
+  --end-date 2024-01-5 \
+  daily_order_analytics
+```
+
+#### Step 5: View Results
 After the DAG completes, run the queries to see the results
 ```bash
 chmod +x run_queries.sh
